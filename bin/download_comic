@@ -20,6 +20,8 @@ echo -n "number of first issue > "
 read first_issue
 echo -n "number of final issue > "
 read last_issue
+echo -n "number of iamges > "
+read last_image
 
 current_issue=$first_issue
 current_image=$first_image
@@ -37,7 +39,15 @@ do
     #echo "current_image is $current_image"
     echo "current issue is $current_issue"
     echo "formatted_current_image is $formatted_current_image"
-    curl -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg
+    if
+      curl --output /dev/null --silent --head --fail https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg ;
+    then
+      echo "URL exists: $formatted_current_image.jpg";
+      curl -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg
+    else
+      echo "URL does not exist: $formatted_current_image.jpg";
+    fi
+
   done
 
   cd ..
