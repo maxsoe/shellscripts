@@ -34,6 +34,7 @@ do
   formatted_current_issue=$(printf "%02d" $current_issue);
   mkdir $formatted_current_issue
   cd $formatted_current_issue
+
   for ((current_image=$first_image; current_image<=$last_image; current_image++))
   do
     printf -v formatted_current_image "%02d" $current_image;
@@ -57,5 +58,6 @@ do
   done
 
   cd ..
+  zip -r -X $formatted_current_issue.zip $formatted_current_issue -i "*.jpg"
 done
 echo "ALL DONE!!"
