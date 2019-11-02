@@ -31,8 +31,9 @@ cd $comic
 
 for ((current_issue=$first_issue; current_issue<=$last_issue; current_issue++))
 do
-  mkdir $current_issue
-  cd $current_issue
+  formatted_current_issue=$(printf "%02d" $current_issue);
+  mkdir $formatted_current_issue
+  cd $formatted_current_issue
   for ((current_image=$first_image; current_image<=$last_image; current_image++))
   do
     printf -v formatted_current_image "%02d" $current_image;
@@ -44,12 +45,12 @@ do
     if
       curl --output /dev/null --silent --head --fail https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg ;
     then
-      echo "DOWNLOADING - $current_issue:$formatted_current_image.jpg";
-      echo "DOWNLOADING - $current_issue:$formatted_current_image.jpg" >> output.txt;
+      echo "DOWNLOADING - $formatted_current_issue:$formatted_current_image.jpg";
+      echo "DOWNLOADING - $formatted_current_issue:$formatted_current_image.jpg" >> output.txt;
       curl -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg;
     else
-      echo "URL does not exist - $current_issue:$formatted_current_image.jpg";
-      echo "URL does not exist - $current_issue:$formatted_current_image.jpg" >> output.txt;
+      echo "URL does not exist - $formatted_current_issue:$formatted_current_image.jpg";
+      echo "URL does not exist - $formatted_current_issue:$formatted_current_image.jpg" >> output.txt;
       break;
     fi
 
