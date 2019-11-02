@@ -5,12 +5,12 @@
 #see if there is a way to introduce parameters
 # comic="batgirl-2016"
 
-#change issue numbers if need be
-first_issue=41;
-last_issue=42;
+#Initialise variables
+first_issue=1;
+last_issue=1;
 
 first_image=1;
-last_image=50;
+last_image=500;
 
 #### Main
 
@@ -20,8 +20,8 @@ echo -n "number of first issue > "
 read first_issue
 echo -n "number of final issue > "
 read last_issue
-echo -n "number of iamges > "
-read last_image
+# echo -n "number of images > "
+# read last_image
 
 current_issue=$first_issue
 current_image=$first_image
@@ -35,17 +35,22 @@ do
   cd $current_issue
   for ((current_image=$first_image; current_image<=$last_image; current_image++))
   do
-    printf -v formatted_current_image "%02d" $current_image
-    #echo "current_image is $current_image"
-    echo "current issue is $current_issue"
-    echo "formatted_current_image is $formatted_current_image"
+    printf -v formatted_current_image "%02d" $current_image;
+    printf -v formatted_current_image "%02d" $current_image >> output.txt;
+    # echo "current issue is $current_issue"
+    # echo "current issue is $current_issue" >> output.txt;
+    # echo "formatted_current_image is $formatted_current_image";
+    # echo "formatted_current_image is $formatted_current_image" >> output.txt;
     if
       curl --output /dev/null --silent --head --fail https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg ;
     then
-      echo "URL exists: $formatted_current_image.jpg";
-      curl -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg
+      echo "DOWNLOADING - $current_issue:$formatted_current_image.jpg";
+      echo "DOWNLOADING - $current_issue:$formatted_current_image.jpg" >> output.txt;
+      curl -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg;
     else
-      echo "URL does not exist: $formatted_current_image.jpg";
+      echo "URL does not exist - $current_issue:$formatted_current_image.jpg";
+      echo "URL does not exist - $current_issue:$formatted_current_image.jpg" >> output.txt;
+      break;
     fi
 
   done
