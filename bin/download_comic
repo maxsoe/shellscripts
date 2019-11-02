@@ -47,7 +47,7 @@ do
     then
       echo "DOWNLOADING - $formatted_current_issue:$formatted_current_image.jpg";
       echo "DOWNLOADING - $formatted_current_issue:$formatted_current_image.jpg" >> output.txt;
-      curl -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg;
+      curl --progress-bar -O https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg;
     else
       echo "URL does not exist - $formatted_current_issue:$formatted_current_image.jpg";
       echo "URL does not exist - $formatted_current_issue:$formatted_current_image.jpg" >> output.txt;
