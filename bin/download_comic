@@ -31,8 +31,8 @@ cd $comic
 
 for ((current_issue=$first_issue; current_issue<=$last_issue; current_issue++))
 do
-  formatted_current_issue=$(printf "%02d" $current_issue);
-  formatted_last_issue=$(printf "%02d" $last_issue);
+  formatted_current_issue=$(printf "%03d" $current_issue);
+  formatted_last_issue=$(printf "%03d" $last_issue);
   mkdir $formatted_current_issue
   cd $formatted_current_issue
   echo "Issue $formatted_current_issue of $formatted_last_issue"
@@ -45,6 +45,7 @@ do
     # echo "current issue is $current_issue" >> output.txt;
     # echo "formatted_current_image is $formatted_current_image";
     # echo "formatted_current_image is $formatted_current_image" >> output.txt;
+
     if
       curl --output /dev/null --silent --head --fail https://readcomicsonline.ru/uploads/manga/$comic/chapters/$current_issue/$formatted_current_image.jpg ;
     then
@@ -59,6 +60,10 @@ do
   done
   echo "Finished downloading issue - $formatted_current_issue";
   cd ..
-  zip -r -X $formatted_current_issue.zip $formatted_current_issue -i "*.jpg"
+  zip_file_name="${comic} ${formatted_current_issue}";
+  echo $zip_file_name;
+  printf -v zip_file_name2 "${comic} ${formatted_current_issue}";
+  echo $zip_file_name2;
+  zip -r -X "$zip_file_name2".zip $formatted_current_issue -i "*.jpg"
 done
 echo "ALL DONE!!"
