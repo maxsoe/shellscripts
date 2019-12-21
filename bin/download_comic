@@ -60,10 +60,8 @@ do
   done
   echo "Finished downloading issue - $formatted_current_issue";
   cd ..
-  zip_file_name="${comic} ${formatted_current_issue}";
+  printf -v zip_file_name "${comic} ${formatted_current_issue}";
   echo $zip_file_name;
-  printf -v zip_file_name2 "${comic} ${formatted_current_issue}";
-  echo $zip_file_name2;
-  zip -r -X "$zip_file_name2".zip $formatted_current_issue -i "*.jpg"
+  zip -r -X "$zip_file_name".zip $formatted_current_issue -i "*.jpg"
 done
 echo "ALL DONE!!"
