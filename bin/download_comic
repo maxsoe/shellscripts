@@ -40,7 +40,7 @@ do
   for ((current_image=$first_image; current_image<=$last_image; current_image++))
   do
     printf -v formatted_current_image "%02d" $current_image;
-    printf -v formatted_current_image "%02d" $current_image >> output.txt;
+    # printf -v formatted_current_image "%02d" $current_image >> output.txt;
     # echo "current issue is $current_issue"
     # echo "current issue is $current_issue" >> output.txt;
     # echo "formatted_current_image is $formatted_current_image";
